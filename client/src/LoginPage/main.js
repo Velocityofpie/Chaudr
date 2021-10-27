@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", e => {
         e.preventDefault();
 
-        // Perform your AJAX/Fetch login
+        // Fetch login
 
         setFormMessage(loginForm, "error", "Invalid username/password combination");
     });
