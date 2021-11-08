@@ -17,8 +17,6 @@ function ChatHeader() {
             </div>
             <div className='chatHeader__right'>
                 Chat setting
-                < ExpandMoreIcon/>
-                
             </div>
 
         </div>
