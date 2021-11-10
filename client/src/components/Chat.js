@@ -23,7 +23,7 @@ function Chat() {
                 </form>
                 <div className="chat__inputIcons">
                     <EmojiEmotionsIcon frontsize="large"  />
-
+                    
                 </div>
             </div>
         </div>
