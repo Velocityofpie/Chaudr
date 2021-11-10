@@ -12,6 +12,7 @@
     display: flex;
     align-items: center;
     color: white;
+    
     /*color: white;*/
     
     
@@ -20,7 +21,7 @@
 .chatHeader__right{
     display: flex;
     align-items: center;
-    flex: .1;
+    padding-right: 5px;
     justify-content: center;
     
 }
@@ -74,11 +75,12 @@
     align-items: center;
     border-radius: var(--border-radius);
     transition: background var(--speed);
+    
     padding: .5 rem;
 }
 
 .menu_item:hover{
-    background-color: #525357;
+    background-color:#525357;
 }
 
 .icon_right{
