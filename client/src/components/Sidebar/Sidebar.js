@@ -11,7 +11,7 @@ function Sidebar() {
         <div className="sidebar">
             <div className="sidebar__top">
                 <h3>Chauder</h3>  
-                <Settings />   
+                <img src="./chaudrlogo.png" alt="logo"/>    
             </div>
             <div className="sidebar__channels">
                 <div className="sidebar__channelsHeader">
@@ -26,8 +26,8 @@ function Sidebar() {
                         <SidebarChannel />
                     </div>
                 </div>
-                <div className="sidebar__bottom">
-                    <h3>bottom half</h3>  
+                <div className="sidebar__bottom"> 
+                    <h3>logout</h3>
                         <Settings />   
                 </div>  
             </div>
