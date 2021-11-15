@@ -12,35 +12,97 @@
     display: flex;
     align-items: center;
     color: white;
+    
     /*color: white;*/
+    
+    
 }
 
 .chatHeader__right{
     display: flex;
     align-items: center;
-    flex: .5;
-    justify-content: space-between;
+    padding-right: 5px;
+    justify-content: center;
+    
 }
 .nav_item{
-    width: calc(var(--nav--size)*.8);
+    width: calc(var(--nav--size)*.1);
     display: flex;
     align-items: center;
     justify-content: center;
 
 }
+
 .icon_button{
-    --button-size: calc(var(--nav-size)*.);
+    --button-size: calc(var(--nav-size)*.5);
     width: var(--button-size);
     height: var(--button-size);
     background-color: gray;
     border-radius: 50%;
-    padding: .5px;
-    margin: .5px;
+    padding: 0px;
+    margin: 0px;
     display: flex;
     align-items: center;
     justify-content:center ;
     transition: filter 300ms;
 }
+
 .icon_button:hover{
     filter: brightness(1.2);
 }
+
+.dropdown{ 
+    position: absolute;
+    top: 58px;
+    width:400px;
+    height:500px;
+    max-width: 500px;
+    transform: translateX(-45%);
+    background-image: url("chowder-pattern.jpg");
+    border: var(--border);
+    border-radius: 15px;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    overflow: hidden;
+    border: 1px solid #26282c;
+    
+}
+
+.menu_item{
+    color: white;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    padding: .5 rem;
+}
+
+.icon_right{
+    margin-left: auto;
+}
+
+.Chatroom_Id{
+    color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px;
+
+}
+.Gen_Code{
+    color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px;
+
+}
+
+.Timer{
+    
+    align-items: center;
+    margin: 100px;
+    justify-content: space-between;
+    height: 0px;
+    width: 200px;
+  }
