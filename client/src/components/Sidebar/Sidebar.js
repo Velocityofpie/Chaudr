@@ -2,7 +2,6 @@ import React from 'react'
 import "./Sidebar.css";
 import AddIcon from "@material-ui/icons/Add";
 import SidebarChannel from './SidebarChannel';
-import Settings from '@material-ui/icons/Settings';
 import {Avatar} from '@material-ui/core/';
 import {useState} from 'react'
 
@@ -22,20 +21,24 @@ function Sidebar() {
                     <div className="sidebar__header">      
                         <h3>Chat rooms</h3>
                     </div>
-                    <button onClick={()=> settButtonPopup(true)} className="sidebar__addChannel" icon={<AddIcon/>} >
+                    <button onClick={()=> settButtonPopup(true)} className="sidebar__addChannel"  >
+                        <span className="button__icon">
+                                <AddIcon/>
+                        </span>
                     </button>
-                    <Popup trigger={buttonPopup} setTrigger={settButtonPopup}>
+                    <Popup trigger={buttonPopup} setTrigger={settButtonPopup} icon={<AddIcon/>}>
+                        <h3>Create or Join</h3>
                         <button onClick={()=> settButtonPopup2(true)} className="Join_btn">
                             Join New Chat
                         </button >
-                        <button onClick={()=> settButtonPopup3(true)} className="Make_btn">
-                            Make New Chat
+                        <button onClick={()=> settButtonPopup3(true)} className="Create_btn">
+                            Create New Chat
                         </button>
                     </Popup>
                     <Join_Popup trigger={buttonPopup2} setTrigger={settButtonPopup2} >
                     </Join_Popup>
-                    <Make_Popup trigger={buttonPopup3} setTrigger={settButtonPopup3} >
-                    </Make_Popup>
+                    <Create_Popup trigger={buttonPopup3} setTrigger={settButtonPopup3} >
+                    </Create_Popup>
                 </div>
                     <div className="sidebar__channelsList">
                         <SidebarChannel />
@@ -46,14 +49,12 @@ function Sidebar() {
                   
                 <div className="sidebar__bottom"> 
                     <button>Logout</button>
-                    <Avatar src={"/chaudrlogo.png"} style={{ height: '75px', width: '75px' } }></Avatar>
-                           
+                    <Avatar src={"/chaudrlogo.png"} style={{ height: '70px', width: '70px' } }></Avatar> 
                 </div>  
             </div>
             
     )
 }
-
 
 function Popup(props) {
     return (props.trigger)?(
@@ -71,17 +72,36 @@ function Join_Popup(props) {
         <div className="join_popup">
            <div className="join_popup__inner">
                 <button className="close_butn2" onClick={()=>props.setTrigger(false)}>Back</button>
-                    Join New Chat
+                <h2>Room ID</h2>
+                <input 
+                type="text"
+                placeholder={'Enter Room ID'} 
+                label="ChannelName"  
+                margin="normal"/>
+                <h2>Code</h2>
+                <input 
+                type="text"
+                placeholder={'Enter Code'} 
+                label="ChannelName"  
+                margin="normal"/>
+                <h2>Channel Name</h2>
+                <input 
+                type="text"
+                placeholder={'Enter Channel Name'} 
+                label="ChannelName"  
+                margin="normal"/>
+                <button>join</button>
                 {props.children}
            </div>
         </div>
     ):"";
 }
-function Make_Popup(props) {
+function Create_Popup(props) {
     return (props.trigger)?(
-        <div className="make_popup">
-           <div className="make_popup__inner">
+        <div className="create_popup">
+           <div className="create_popup__inner">
                 <button className="close_butn3" onClick={()=>props.setTrigger(false)}>Back</button>
+                <h2>Channel Name</h2>
                 <input 
                 type="text"
                 placeholder={'Enter Channel Name'} 
