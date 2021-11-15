@@ -1,8 +1,7 @@
 import React,{useState}  from 'react'
 import './ChatHeader.css'
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import AddIcon from "@material-ui/icons/Add";
-
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Timer from "./Timer";
 
 function ChatHeader() {
     return (
@@ -10,9 +9,8 @@ function ChatHeader() {
             <div className='chatHeader__left'>
                 <h3>
                     <span className='chatHeader_name'> 
-                        -
-                    </span>
-                        test Channel Name
+                        - Channel Name
+                    </span>   
                 </h3>
             </div>
             <div className='chatHeader__right'>
@@ -20,7 +18,7 @@ function ChatHeader() {
                     Add User
                 </h3>
                 <Navbar className='navbar__right'>
-                    <NavItem icon={<AddIcon/>}>
+                    <NavItem icon={<PersonAddIcon/>}>
                         <DropdownMenu/>
                     </NavItem>
                 </Navbar>
@@ -41,33 +39,18 @@ function DropdownMenu(){
     return(
         <div className="dropdown">
             <DropdownItem>
-                <div className= "Change_ChatName">
-                    <form>
-                        <input placeholder={'Enter New Change Room Name'}/>
-                        <button className="chat__inputButton" type ="submit">
-                            send message
-                        </button>
-                    </form>
+                <div className= "Chatroom_Id">
+                    Chat room Id:
                 </div>
             </DropdownItem>
             <DropdownItem>
-                <div className= "Change_UserName">
-                    <form>
-                        <input placeholder={'Enter New Username'}/>
-                        <button className="chat__inputButton" type ="submit">
-                            send message
-                        </button>
-                    </form>
+                <div className= "Gen_Code">
+                    Code:
                 </div>
             </DropdownItem>
             <DropdownItem>
-                <div className= "Add_User">
-                    <form>
-                        <input placeholder={'Add New User'}/>
-                        <button className="chat__inputButton" type ="submit">
-                            send message
-                        </button>
-                    </form>
+                <div className= "Timer">
+                    <Timer/>
                 </div>
             </DropdownItem>
         </div>
@@ -94,6 +77,8 @@ function NavItem(props) {
         </li>
     )
 }
+
+
 
 export default ChatHeader
 

@@ -26,7 +26,7 @@
     
 }
 .nav_item{
-    width: calc(var(--nav--size)*.8);
+    width: calc(var(--nav--size)*.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +34,7 @@
 }
 
 .icon_button{
-    --button-size: calc(var(--nav-size)*.);
+    --button-size: calc(var(--nav-size)*.5);
     width: var(--button-size);
     height: var(--button-size);
     background-color: gray;
@@ -55,8 +55,8 @@
     position: absolute;
     top: 58px;
     width:400px;
-    height:400px;
-    max-width: 400px;
+    height:500px;
+    max-width: 500px;
     transform: translateX(-45%);
     background-image: url("chowder-pattern.jpg");
     border: var(--border);
@@ -74,28 +74,35 @@
     display: flex;
     align-items: center;
     border-radius: var(--border-radius);
-    transition: background var(--speed);
-    
     padding: .5 rem;
-}
-
-.menu_item:hover{
-    background-color:#525357;
 }
 
 .icon_right{
     margin-left: auto;
 }
 
-.Change_ChatName{
+.Chatroom_Id{
     color: lightgray;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0px;
-    border-radius: 5px;
-    margin: 20px;
-    border-top: 1px solid gray;
-    background-color: #474b53;
 
 }
+.Gen_Code{
+    color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px;
+
+}
+
+.Timer{
+    
+    align-items: center;
+    margin: 100px;
+    justify-content: space-between;
+    height: 0px;
+    width: 200px;
+  }
