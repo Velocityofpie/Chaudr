@@ -1,0 +1,197 @@
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 0.25;
+  height: 100vh;
+  background-color: #2f3136;
+  max-width: 300px;
+}
+
+.sidebar__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #2f3136;
+  color: white;
+  border-bottom: 3px solid #26282c;
+  
+}
+.sidebar__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:20px;
+  background-color: #2a2c31;
+  color: white;
+}
+
+.sidebar__channels {
+  flex: 1;
+}
+
+.sidebar__addChannel {
+  cursor: pointer;
+  padding: .5px;
+  margin: 0px;
+  
+  border: none;
+  background-color: gray;
+  align-items: center;
+  
+
+}
+
+.sidebar__addChannel:hover {
+  filter: brightness(1.2);
+}
+
+.sidebar__channelsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #2f3135;
+  color: gray;
+}
+
+.sidebar__header {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: gray;
+  background-color: #2f3135;
+  padding: 10px;
+  border: 1px solid gray;
+}
+
+
+.sidebar__profileInfo {
+  flex: 1;
+  padding: 10px;
+}
+
+.sidebar__profileInfo > h3 {
+  color: white;
+}
+
+.sidebar__profileIcons > .MuiSvgIcon-root {
+  padding: 10px;
+}
+.Avatar{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.popup{
+  position:fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup__inner{
+  position: relative;
+  padding: 32px;
+  height: 500px;
+  width: 100%;
+  max-width: 440px;
+  background-color:  #343434;
+}
+
+.join_popup{
+  position:fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.join_popup__inner{
+  position: relative;
+  padding: 32px;
+  height: 500px;
+  width: 100%;
+  max-width: 440px;
+  background-color:  #343434;
+}
+
+.create_popup{
+  position:fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create_popup__inner{
+  position: relative;
+  padding: 32px;
+  height: 500px;
+  width: 100%;
+  max-width: 440px;
+  align-items: center;
+  background-color:  #343434;
+}
+
+
+.popup__inner .close_butn{
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.popup__inner .Join_btn{
+  position: absolute;
+  bottom: 250px;
+  right: 50px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  font-size: 1rem;  
+  color:#ffffff;
+  border: black;
+  border-radius: var(--boarder-radius);
+  outline:none;
+  cursor: pointer;
+  background-color: #73067b;
+}
+.popup__inner .Create_btn{
+  position: absolute;
+  bottom: 250px;
+  left: 50px;
+  width: 200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  font-size: 1rem;  
+  color:#ffffff;
+  border: black;
+  border-radius: var(--boarder-radius);
+  outline:none;
+  cursor: pointer;
+  background-color: #73067b;
+
+}
+
+.ChannelName__text{
+  justify-content: center; 
+  align-items: center;
+}
