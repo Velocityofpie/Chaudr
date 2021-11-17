@@ -39,10 +39,10 @@ function Sidebar() {
                         </button>
                         
                     </Popup>
-                    <Join_Popup trigger={buttonPopup2} setTrigger={settButtonPopup2} >
-                    </Join_Popup>
-                    <Create_Popup trigger={buttonPopup3} setTrigger={settButtonPopup3} >
-                    </Create_Popup>
+                    <JoinPopup trigger={buttonPopup2} setTrigger={settButtonPopup2} >
+                    </JoinPopup>
+                    <CreatePopup trigger={buttonPopup3} setTrigger={settButtonPopup3} >
+                    </CreatePopup>
                 </div>
                     <div className="sidebar__channelsList">
                         <SidebarChannel />
@@ -71,7 +71,7 @@ function Popup(props) {
     ):"";
 }
 
-function Join_Popup(props) {
+function JoinPopup(props) {
     return (props.trigger)?(
         <div className="join_popup">
            <div className="join_popup__inner">
@@ -102,7 +102,7 @@ function Join_Popup(props) {
         </div>
     ):"";
 }
-function Create_Popup(props) {
+function CreatePopup(props) {
     return (props.trigger)?(
         <div className="create_popup">
            <div className="create_popup__inner">
