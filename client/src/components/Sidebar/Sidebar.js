@@ -27,13 +27,17 @@ function Sidebar() {
                         </span>
                     </button>
                     <Popup trigger={buttonPopup} setTrigger={settButtonPopup} icon={<AddIcon/>}>
+                        
                         <h3>Create or Join</h3>
+                        
                         <button onClick={()=> settButtonPopup2(true)} className="Join_btn">
                             Join New Chat
                         </button >
+                        
                         <button onClick={()=> settButtonPopup3(true)} className="Create_btn">
                             Create New Chat
                         </button>
+                        
                     </Popup>
                     <Join_Popup trigger={buttonPopup2} setTrigger={settButtonPopup2} >
                     </Join_Popup>
@@ -72,7 +76,7 @@ function Join_Popup(props) {
         <div className="join_popup">
            <div className="join_popup__inner">
                 <button className="close_butn2" onClick={()=>props.setTrigger(false)}>Back</button>
-                <h2>Room ID</h2>
+                <h2>Room ID</h2> 
                 <input 
                 type="text"
                 placeholder={'Enter Room ID'} 
@@ -90,7 +94,9 @@ function Join_Popup(props) {
                 placeholder={'Enter Channel Name'} 
                 label="ChannelName"  
                 margin="normal"/>
+                <li>
                 <button>join</button>
+                </li>
                 {props.children}
            </div>
         </div>
@@ -101,7 +107,7 @@ function Create_Popup(props) {
         <div className="create_popup">
            <div className="create_popup__inner">
                 <button className="close_butn3" onClick={()=>props.setTrigger(false)}>Back</button>
-                <h2>Channel Name</h2>
+                <h2 className="ChannelName__text"> Channel Name</h2>
                 <input 
                 type="text"
                 placeholder={'Enter Channel Name'} 
