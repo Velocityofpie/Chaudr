@@ -5,6 +5,8 @@ import SidebarChannel from './SidebarChannel';
 import {Avatar} from '@material-ui/core/';
 import {useState} from 'react'
 
+
+
 function Sidebar() {
     const[buttonPopup,settButtonPopup]=useState(false)
     const[buttonPopup2,settButtonPopup2]=useState(false)
@@ -37,10 +39,10 @@ function Sidebar() {
                         </button>
                         
                     </Popup>
-                    <JoinPopup trigger={buttonPopup2} setTrigger={settButtonPopup2} >
-                    </JoinPopup>
-                    <CreatePopup trigger={buttonPopup3} setTrigger={settButtonPopup3} >
-                    </CreatePopup>
+                    <Join_Popup trigger={buttonPopup2} setTrigger={settButtonPopup2} >
+                    </Join_Popup>
+                    <Create_Popup trigger={buttonPopup3} setTrigger={settButtonPopup3} >
+                    </Create_Popup>
                 </div>
                     <div className="sidebar__channelsList">
                         <SidebarChannel />
@@ -69,7 +71,7 @@ function Popup(props) {
     ):"";
 }
 
-function JoinPopup(props) {
+function Join_Popup(props) {
     return (props.trigger)?(
         <div className="join_popup">
            <div className="join_popup__inner">
@@ -100,7 +102,7 @@ function JoinPopup(props) {
         </div>
     ):"";
 }
-function CreatePopup(props) {
+function Create_Popup(props) {
     return (props.trigger)?(
         <div className="create_popup">
            <div className="create_popup__inner">
