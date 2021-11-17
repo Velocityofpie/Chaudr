@@ -6,8 +6,8 @@ package main
 
 import (
 	"bytes"
-	"chaudr/repository"
 	"fmt"
+	"github.com/Velocityofpie/chaudr/repository"
 	"log"
 	"net/http"
 	"strconv"

@@ -1,4 +1,4 @@
-module chaudr
+module github.com/Velocityofpie/chaudr
 
 go 1.16
 
