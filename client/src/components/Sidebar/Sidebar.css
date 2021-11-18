@@ -195,3 +195,15 @@
   justify-content: center; 
   align-items: center;
 }
+
+.logout_btn{
+  padding: 1rem 2rem;
+  font-weight: bold;
+  font-size: 1rem;  
+  color:#ffffff;
+  border: black;
+  border-radius: var(--boarder-radius);
+  outline:none;
+  cursor: pointer;
+  background-color: #73067b;
+}
