@@ -14,7 +14,7 @@ function Sidebar() {
     return (
         <div className="sidebar">
             <div className="sidebar__top">
-                <h3>Chauder</h3>
+                <h3>Chaudr</h3>
             </div>
             <div className="sidebar__channels">
                 <div className="sidebar__channelsHeader">
@@ -37,7 +37,6 @@ function Sidebar() {
                         <button onClick={()=> settButtonPopup3(true)} className="Create_btn">
                             Create New Chat
                         </button>
-                        
                     </Popup>
                     <JoinPopup trigger={buttonPopup2} setTrigger={settButtonPopup2} >
                     </JoinPopup>
@@ -52,7 +51,7 @@ function Sidebar() {
                 </div>
                   
                 <div className="sidebar__bottom"> 
-                    <button>Logout</button>
+                    <button className =" logout_btn">Logout</button>
                     <Avatar src={"/chaudrlogo.png"} style={{ height: '70px', width: '70px' } }></Avatar> 
                 </div>  
             </div>
