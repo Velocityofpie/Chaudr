@@ -59,8 +59,10 @@ func main() {
 			return
 		}
 
-		writer.Write([]byte("initiated handshake"))
+		writer.Write([]byte("needs to be implemented"))
 	})
+
+	// TODO: add an api that adds a bot to an existing room which sends "hi" every ten seconds
 
 	// PUT /room
 	// POST /room
