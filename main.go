@@ -29,16 +29,13 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	// add dummy data
-	dummyHub := newHub()
-	roomHubMap := new(sync.Map)
-	roomHubMap.Store(uint(1234), dummyHub)
+
+	serveMux := http.NewServeMux()
+
 	flag.Parse()
 
-	http.HandleFunc("/", serveHome)
-
 	log.Println("server starting...")
-	err := http.ListenAndServe(*addr, serveMux)
+	err := http.ListenAndServe(*addr, addRoutes(serveMux))
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

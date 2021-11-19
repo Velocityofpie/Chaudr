@@ -9,7 +9,7 @@ import (
 	"sync"
 )
 
-func addRoutes(mux *http.ServeMux) {
+func addRoutes(mux *http.ServeMux) http.Handler {
 	// add dummy data
 	dummyHub := newHub()
 	roomHubMap := new(sync.Map)
@@ -75,10 +75,27 @@ func addRoutes(mux *http.ServeMux) {
 
 	})
 
-	mux.HandleFunc("/greeting", func(writer http.ResponseWriter, request *http.Request) {
+	mux.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
 		if request.Method != http.MethodGet {
 			writer.WriteHeader(http.StatusBadRequest)
 		}
-		writer.Write([]byte("hello world"))
+		writer.Write([]byte("healthy"))
+	})
+
+	// add logging middleware
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		scheme := "http"
+		if request.TLS != nil {
+			scheme = "https"
+		}
+		logger.Infof(
+			"%s://%s%s %s from %s",
+			scheme,
+			request.Host,
+			request.RequestURI,
+			request.Proto,
+			request.RemoteAddr,
+		)
+		mux.ServeHTTP(writer, request)
 	})
 }
