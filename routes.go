@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
+	"io/fs"
 	"log"
 	"math/rand"
 	"net/http"
@@ -81,6 +82,13 @@ func addRoutes(mux *http.ServeMux) http.Handler {
 		}
 		writer.Write([]byte("healthy"))
 	})
+
+	// add javascript client
+	f, err := fs.Sub(client, "client/build")
+	if err != nil {
+		panic(err)
+	}
+	mux.Handle("/", http.FileServer(http.FS(f)))
 
 	// add logging middleware
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
