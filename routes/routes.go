@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"github.com/Velocityofpie/chaudr/config"
-	hub2 "github.com/Velocityofpie/chaudr/hub"
+	"github.com/Velocityofpie/chaudr/hub"
 	"github.com/Velocityofpie/chaudr/log"
 	"github.com/pkg/errors"
 	"math/rand"
@@ -19,7 +19,7 @@ func AddRoutes(mux *http.ServeMux) http.Handler {
 	// add dummy data
 	roomHubMap := new(sync.Map)
 	if config.DebugMode {
-		dummyHub := hub2.NewHub()
+		dummyHub := hub.NewHub()
 		roomHubMap.Store(uint(1234), dummyHub)
 		go dummyHub.Run()
 	}
@@ -51,7 +51,7 @@ func AddRoutes(mux *http.ServeMux) http.Handler {
 	if config.DebugMode {
 		// an api that adds a bot to an existing room which sends "hi" every ten seconds
 		mux.HandleFunc("/room/hibot", func(writer http.ResponseWriter, request *http.Request) {
-			hub2.BotHandler(roomHubMap, writer, request)
+			hub.BotHandler(roomHubMap, writer, request)
 		})
 
 		mux.HandleFunc("/room/test", func(writer http.ResponseWriter, request *http.Request) {
@@ -70,10 +70,10 @@ func AddRoutes(mux *http.ServeMux) http.Handler {
 		if request.Method == http.MethodPut {
 			// TODO: create room logic
 			log.Logger.Debug("creating room")
-			hub := hub2.NewHub()
+			h := hub.NewHub()
 			roomId := rand.Uint32()
-			roomHubMap.Store(roomId, &hub)
-			go hub.Run()
+			roomHubMap.Store(roomId, &h)
+			go h.Run()
 			type createRoomResponse struct {
 				RoomId uint `json:"roomId"`
 			}
@@ -92,12 +92,7 @@ func AddRoutes(mux *http.ServeMux) http.Handler {
 
 	})
 
-	mux.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
-		if request.Method != http.MethodGet {
-			writer.WriteHeader(http.StatusBadRequest)
-		}
-		writer.Write([]byte("healthy"))
-	})
+	addHealthCheck(mux)
 
 	// add logging middleware
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
