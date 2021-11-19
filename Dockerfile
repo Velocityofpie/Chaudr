@@ -1,15 +1,20 @@
-FROM golang:1.16-alpine
+FROM golang:1.17 as build-env
 
-WORKDIR /app
+WORKDIR /go/src/app
 
 COPY go.mod ./
 COPY go.sum ./
 
 RUN go mod download
 
-COPY *.go ./
+COPY . .
 
-RUN go build -o /chaudr
+RUN go vet -v
+RUN go test -v
 
-ENTRYPOINT [ "chaudr" ]
-CMD [ "-addr :8080" ]
+RUN CGO_ENABLED=1 go build -o /go/bin/chaudr
+
+FROM gcr.io/distroless/base
+
+COPY --from=build-env /go/bin/chaudr /
+CMD [ "/chaudr", "-addr", ":8080" ]

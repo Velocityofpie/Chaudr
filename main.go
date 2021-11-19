@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"github.com/pkg/errors"
 	"log"
 	"math/rand"
@@ -104,11 +103,8 @@ func main() {
 		writer.Write([]byte("hello world"))
 	})
 
-	if err := http.ListenAndServe(":8080", http.DefaultServeMux); err != nil {
-		fmt.Println("server ran into an error: ", err)
-	}
-
-	err := http.ListenAndServe(*addr, nil)
+	log.Println("server starting...")
+	err := http.ListenAndServe(*addr, http.DefaultServeMux)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
