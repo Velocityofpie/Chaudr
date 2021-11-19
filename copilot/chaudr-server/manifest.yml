@@ -16,13 +16,13 @@ image:
 
 command: "/chaudr -addr :80"
 
-# http:
-#   healthcheck:
-#     path: /
-#     healthy_threshold: 3
-#     unhealthy_threshold: 5
-#     interval: 10s
-#     timeout: 5s
+http:
+ healthcheck:
+   path: /health
+   healthy_threshold: 3
+   unhealthy_threshold: 5
+   interval: 10s
+   timeout: 5s
 
 # Number of CPU units for the task.
 cpu: 1024
