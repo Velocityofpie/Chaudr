@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package main
+package hub
 
 import (
 	"bytes"
@@ -32,7 +32,7 @@ var (
 	space   = []byte{' '}
 )
 
-var upgrader = websocket.Upgrader{
+var Upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
@@ -48,6 +48,27 @@ type ConnectedMember struct {
 	send chan []byte
 
 	member repository.Member
+
+	registered bool
+}
+
+func NewConnectedMember(hub *RoomHub, conn *websocket.Conn, send chan []byte, member repository.Member) ConnectedMember {
+	return ConnectedMember{
+		hub:    hub,
+		conn:   conn,
+		send:   send,
+		member: member,
+	}
+}
+
+func (c *ConnectedMember) Register() {
+	if !c.registered {
+		c.hub.register <- c
+	}
+	// Allow collection of memory referenced by the caller by doing all work in
+	// new goroutines.
+	go c.writePump()
+	go c.readPump()
 }
 
 // readPump pumps messages from the websocket connection to the hub.

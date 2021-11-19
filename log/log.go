@@ -1,24 +1,28 @@
-package main
+package log
 
 import (
 	"fmt"
 	"go.uber.org/zap"
 )
 
-var logger *zap.SugaredLogger
+var Logger *zap.SugaredLogger
 
-func initProd() {
+func init() {
+	InitDev()
+}
+
+func InitProd() {
 	l, err := zap.NewProduction()
 	if err != nil {
 		panic(fmt.Sprintf("logger failed to create: %v", err))
 	}
-	logger = l.Sugar()
+	Logger = l.Sugar()
 }
 
-func initDev() {
+func InitDev() {
 	l, err := zap.NewDevelopment()
 	if err != nil {
 		panic(fmt.Sprintf("logger failed to create: %v", err))
 	}
-	logger = l.Sugar()
+	Logger = l.Sugar()
 }
