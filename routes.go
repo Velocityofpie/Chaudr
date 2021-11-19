@@ -1,24 +1,149 @@
 package main
 
 import (
+	_ "embed"
 	"encoding/json"
+	"fmt"
+	"github.com/Velocityofpie/chaudr/repository"
 	"github.com/pkg/errors"
 	"io/fs"
 	"log"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"sync"
+	"time"
 )
+
+//go:embed test.html
+var testHtml []byte
+
+// botHandler handles websocket requests from the peer.
+func botHandler(hubMap *sync.Map, w http.ResponseWriter, r *http.Request) {
+	roomId := r.URL.Query().Get("roomId")
+	username := r.URL.Query().Get("username")
+
+	if username == "" {
+		username = "hibot"
+	}
+
+	if roomId == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("join request has blank room id"))
+		return
+	}
+
+	id, err := strconv.ParseUint(roomId, 10, 32)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Sprintf("could not parse room id: %s", roomId)))
+		return
+	}
+
+	hub, ok := hubMap.Load(uint(id))
+	if !ok {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(fmt.Sprintf("unknown room id %d", id)))
+		return
+	}
+
+	h := hub.(*RoomHub)
+
+	for client := range h.clients {
+		if client.member.Username == username {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("hibot username is already taken"))
+			return
+		}
+	}
+
+	go func() {
+		ticker := time.NewTicker(5 * time.Second)
+		for {
+			select {
+			case <-ticker.C:
+				h.broadcast <- []byte("hi from hibot")
+			}
+		}
+	}()
+}
+
+// joinRoomHandler handles websocket requests from the peer.
+func joinRoomHandler(hubMap *sync.Map, w http.ResponseWriter, r *http.Request) {
+	roomId := r.URL.Query().Get("roomId")
+	username := r.URL.Query().Get("username")
+
+	if username == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("join request has blank username"))
+		return
+	}
+
+	if roomId == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("join request has blank room id"))
+		return
+	}
+
+	// TODO: check if the given room id and username pair is valid
+	// ...
+
+	id, err := strconv.ParseUint(roomId, 10, 32)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Sprintf("could not parse room id: %s", roomId)))
+		return
+	}
+
+	// TODO: if room hub does not exist, create it. Implement this after repository
+	hub, ok := hubMap.Load(uint(id))
+	if !ok {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(fmt.Sprintf("unknown room id %d", id)))
+		return
+	}
+
+	h := hub.(*RoomHub)
+
+	for client := range h.clients {
+		if client.member.Username == username {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(fmt.Sprintf("member is already connected: %s", username)))
+			return
+		}
+	}
+
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	client := &ConnectedMember{
+		hub:  h,
+		conn: conn,
+		send: make(chan []byte, 256),
+		member: repository.Member{
+			RoomID:   uint(id),
+			Username: username,
+		},
+	}
+	client.hub.register <- client
+
+	// Allow collection of memory referenced by the caller by doing all work in
+	// new goroutines.
+	go client.writePump()
+	go client.readPump()
+}
 
 func addRoutes(mux *http.ServeMux) http.Handler {
 	// add dummy data
 	dummyHub := newHub()
 	roomHubMap := new(sync.Map)
 	roomHubMap.Store(uint(1234), dummyHub)
+	go dummyHub.run()
 
 	mux.HandleFunc("/room/connect", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("joining room")
-		joinRoom(roomHubMap, w, r)
+		joinRoomHandler(roomHubMap, w, r)
 	})
 
 	// PUT /room/user
@@ -41,7 +166,14 @@ func addRoutes(mux *http.ServeMux) http.Handler {
 		writer.Write([]byte("needs to be implemented"))
 	})
 
-	// TODO: add an api that adds a bot to an existing room which sends "hi" every ten seconds
+	// an api that adds a bot to an existing room which sends "hi" every ten seconds
+	mux.HandleFunc("/room/hibot", func(writer http.ResponseWriter, request *http.Request) {
+		botHandler(roomHubMap, writer, request)
+	})
+
+	mux.HandleFunc("/room/test", func(writer http.ResponseWriter, request *http.Request) {
+		writer.Write(testHtml)
+	})
 
 	// PUT /room
 	// POST /room
@@ -84,7 +216,7 @@ func addRoutes(mux *http.ServeMux) http.Handler {
 	})
 
 	// add javascript client
-	f, err := fs.Sub(client, "client/build")
+	f, err := fs.Sub(clientUI, "client/build")
 	if err != nil {
 		panic(err)
 	}

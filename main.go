@@ -10,7 +10,7 @@ import (
 )
 
 //go:embed client/build/*
-var client embed.FS
+var clientUI embed.FS
 
 var addr = flag.String("addr", ":8080", "http service address")
 
