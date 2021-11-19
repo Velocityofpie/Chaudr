@@ -3,6 +3,7 @@ package routes
 import (
 	_ "embed"
 	"encoding/json"
+	"github.com/Velocityofpie/chaudr/config"
 	hub2 "github.com/Velocityofpie/chaudr/hub"
 	"github.com/Velocityofpie/chaudr/log"
 	"github.com/pkg/errors"
@@ -16,10 +17,12 @@ var testHtml []byte
 
 func AddRoutes(mux *http.ServeMux) http.Handler {
 	// add dummy data
-	dummyHub := hub2.NewHub()
 	roomHubMap := new(sync.Map)
-	roomHubMap.Store(uint(1234), dummyHub)
-	go dummyHub.Run()
+	if config.DebugMode {
+		dummyHub := hub2.NewHub()
+		roomHubMap.Store(uint(1234), dummyHub)
+		go dummyHub.Run()
+	}
 
 	mux.HandleFunc("/room/connect", func(w http.ResponseWriter, r *http.Request) {
 		joinRoomHandler(roomHubMap, w, r)
@@ -45,14 +48,16 @@ func AddRoutes(mux *http.ServeMux) http.Handler {
 		writer.Write([]byte("needs to be implemented"))
 	})
 
-	// an api that adds a bot to an existing room which sends "hi" every ten seconds
-	mux.HandleFunc("/room/hibot", func(writer http.ResponseWriter, request *http.Request) {
-		hub2.BotHandler(roomHubMap, writer, request)
-	})
+	if config.DebugMode {
+		// an api that adds a bot to an existing room which sends "hi" every ten seconds
+		mux.HandleFunc("/room/hibot", func(writer http.ResponseWriter, request *http.Request) {
+			hub2.BotHandler(roomHubMap, writer, request)
+		})
 
-	mux.HandleFunc("/room/test", func(writer http.ResponseWriter, request *http.Request) {
-		writer.Write(testHtml)
-	})
+		mux.HandleFunc("/room/test", func(writer http.ResponseWriter, request *http.Request) {
+			writer.Write(testHtml)
+		})
+	}
 
 	// PUT /room
 	// POST /room
