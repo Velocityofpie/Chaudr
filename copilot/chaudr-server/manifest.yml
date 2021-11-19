@@ -14,6 +14,8 @@ image:
   # Port exposed through your container to route traffic to it.
   port: 80
 
+command: "/chaudr -addr :80"
+
 # http:
 #   healthcheck:
 #     path: /
