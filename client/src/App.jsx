@@ -3,7 +3,7 @@ import React from 'react'
 import "./App.css"
 import Chat from './components/Chat'
 import Sidebar from './components/Sidebar/Sidebar'
-//import RightSidebar from './components/Sidebar/RightSidebar'
+import RightSidebar from './components/Sidebar/RightSidebar'
 //import {selectUser} from "./components/User/userSlice"
 
 const App = () => {
