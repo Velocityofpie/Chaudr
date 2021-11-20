@@ -6,7 +6,6 @@ package hub
 
 import (
 	"bytes"
-	"github.com/Velocityofpie/chaudr/repository"
 	"log"
 	"time"
 
@@ -47,12 +46,12 @@ type ConnectedMember struct {
 	// Buffered channel of outbound messages.
 	send chan []byte
 
-	member repository.Member
+	member string
 
 	registered bool
 }
 
-func NewConnectedMember(hub *RoomHub, conn *websocket.Conn, send chan []byte, member repository.Member) ConnectedMember {
+func NewConnectedMember(hub *RoomHub, conn *websocket.Conn, send chan []byte, member string) ConnectedMember {
 	return ConnectedMember{
 		hub:    hub,
 		conn:   conn,

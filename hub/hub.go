@@ -22,24 +22,32 @@ type RoomHub struct {
 
 	// Unregister requests from clients.
 	unregister chan *ConnectedMember
+
+	// Room Id
+	roomId uint
 }
 
-func NewHub() *RoomHub {
+func NewHub(roomId uint) *RoomHub {
 	return &RoomHub{
 		broadcast:  make(chan []byte),
 		register:   make(chan *ConnectedMember),
 		unregister: make(chan *ConnectedMember),
 		clients:    make(map[*ConnectedMember]bool),
+		roomId:     roomId,
 	}
 }
 
 func (h *RoomHub) CheckUsernameTaken(username string) bool {
 	for client := range h.clients {
-		if client.member.Username == username {
+		if client.member == username {
 			return true
 		}
 	}
 	return false
+}
+
+func (h *RoomHub) GetRoomId() uint {
+	return h.roomId
 }
 
 func (h *RoomHub) Run() {

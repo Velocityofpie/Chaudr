@@ -18,7 +18,7 @@ command: "/chaudr -addr :80"
 
 http:
  healthcheck:
-   path: /health
+   path: /
    healthy_threshold: 3
    unhealthy_threshold: 5
    interval: 10s
@@ -41,4 +41,4 @@ memory: 2048
 environments:
  test:
    variables:
-     DEBUG: 1        # Log level for the "test" environment.
+     LOG_LEVEL: debug        # Log level for the "test" environment.

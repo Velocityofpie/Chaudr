@@ -62,7 +62,7 @@ func joinRoomHandler(hubMap *sync.Map, w http.ResponseWriter, r *http.Request) {
 		h,
 		conn,
 		make(chan []byte, 256),
-		repository.Member{
+		repository.memberSqlModel{
 			RoomID:   uint(id),
 			Username: username,
 		},
