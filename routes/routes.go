@@ -19,7 +19,7 @@ func AddRoutes(mux *http.ServeMux) http.Handler {
 	// add dummy data
 	roomHubMap := new(sync.Map)
 	if config.DebugMode {
-		dummyHub := hub.NewHub()
+		dummyHub := hub.NewHub(0)
 		roomHubMap.Store(uint(1234), dummyHub)
 		go dummyHub.Run()
 	}
@@ -70,7 +70,7 @@ func AddRoutes(mux *http.ServeMux) http.Handler {
 		if request.Method == http.MethodPut {
 			// TODO: create room logic
 			log.Logger.Debug("creating room")
-			h := hub.NewHub()
+			h := hub.NewHub(0)
 			roomId := rand.Uint32()
 			roomHubMap.Store(roomId, &h)
 			go h.Run()

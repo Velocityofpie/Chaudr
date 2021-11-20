@@ -3,7 +3,6 @@ package routes
 import (
 	"fmt"
 	"github.com/Velocityofpie/chaudr/hub"
-	"github.com/Velocityofpie/chaudr/repository"
 	"log"
 	"net/http"
 	"strconv"
@@ -62,10 +61,7 @@ func joinRoomHandler(hubMap *sync.Map, w http.ResponseWriter, r *http.Request) {
 		h,
 		conn,
 		make(chan []byte, 256),
-		repository.memberSqlModel{
-			RoomID:   uint(id),
-			Username: username,
-		},
+		username,
 	)
 	client.Register()
 }
