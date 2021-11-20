@@ -1,3 +1,15 @@
+FROM node:16 as client
+
+WORKDIR /usr/src/app
+
+COPY client/package*.json ./client/
+
+RUN cd client && npm install && cd ..
+
+COPY . .
+
+RUN cd client && npm install && cd ..
+
 FROM golang:1.17 as build-env
 
 WORKDIR /go/src/app
@@ -7,7 +19,7 @@ COPY go.sum ./
 
 RUN go mod download
 
-COPY . .
+COPY --from=client /usr/src/app /go/src/app
 
 RUN go vet -v
 RUN go test -v

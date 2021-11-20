@@ -2,16 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package main
+package hub
 
 import (
 	"bytes"
-	"fmt"
-	"github.com/Velocityofpie/chaudr/repository"
 	"log"
-	"net/http"
-	"strconv"
-	"sync"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -36,7 +31,7 @@ var (
 	space   = []byte{' '}
 )
 
-var upgrader = websocket.Upgrader{
+var Upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
@@ -51,7 +46,28 @@ type ConnectedMember struct {
 	// Buffered channel of outbound messages.
 	send chan []byte
 
-	member repository.Member
+	member string
+
+	registered bool
+}
+
+func NewConnectedMember(hub *RoomHub, conn *websocket.Conn, send chan []byte, member string) ConnectedMember {
+	return ConnectedMember{
+		hub:    hub,
+		conn:   conn,
+		send:   send,
+		member: member,
+	}
+}
+
+func (c *ConnectedMember) Register() {
+	if !c.registered {
+		c.hub.register <- c
+	}
+	// Allow collection of memory referenced by the caller by doing all work in
+	// new goroutines.
+	go c.writePump()
+	go c.readPump()
 }
 
 // readPump pumps messages from the websocket connection to the hub.
@@ -124,70 +140,4 @@ func (c *ConnectedMember) writePump() {
 			}
 		}
 	}
-}
-
-// joinRoom handles websocket requests from the peer.
-func joinRoom(hubMap *sync.Map, w http.ResponseWriter, r *http.Request) {
-	roomId := r.URL.Query().Get("roomId")
-	username := r.URL.Query().Get("username")
-
-	if username == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("join request has blank username"))
-		return
-	}
-
-	if roomId == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("join request has blank room id"))
-		return
-	}
-
-	// TODO: check if the given room id and username pair is valid
-	// ...
-
-	id, err := strconv.ParseUint(roomId, 10, 32)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(fmt.Sprintf("could not parse room id: %s", roomId)))
-		return
-	}
-
-	hub, ok := hubMap.Load(uint(id))
-	if !ok {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(fmt.Sprintf("unknown room id %d", id)))
-		return
-	}
-
-	h := hub.(*RoomHub)
-
-	for client := range h.clients {
-		if client.member.Username == username {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte(fmt.Sprintf("member is already connected: %s", username)))
-			return
-		}
-	}
-
-	conn, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	client := &ConnectedMember{
-		hub:  h,
-		conn: conn,
-		send: make(chan []byte, 256),
-		member: repository.Member{
-			RoomID:   uint(id),
-			Username: username,
-		},
-	}
-	client.hub.register <- client
-
-	// Allow collection of memory referenced by the caller by doing all work in
-	// new goroutines.
-	go client.writePump()
-	go client.readPump()
 }

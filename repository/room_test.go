@@ -11,7 +11,7 @@ func TestCreateRoom(t *testing.T) {
 		t.Fatalf("could not create room repository")
 	}
 
-	room := Room{}
+	room := roomSqlModel{}
 	createdRoom, err := repo.CreateRoom(room)
 	if err != nil {
 		t.Errorf("could not create room: %v", err)
@@ -36,7 +36,7 @@ func TestAddMemberToRoom(t *testing.T) {
 		t.Fatalf("could not create room repository")
 	}
 
-	room := Room{}
+	room := roomSqlModel{}
 	createdRoom, err := repo.CreateRoom(room)
 	if err != nil {
 		t.Errorf("could not create room: %v", err)
