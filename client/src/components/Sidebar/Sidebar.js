@@ -28,7 +28,7 @@ function Sidebar() {
                     </button>
                     <Popup trigger={buttonPopup} setTrigger={settButtonPopup} icon={<AddIcon/>}>
                         
-                        <h3>Create or Join</h3>
+                        
                         
                         <button onClick={()=> settButtonPopup2(true)} className="Join_btn">
                             Join New Chat
@@ -75,27 +75,29 @@ function JoinPopup(props) {
         <div className="join_popup">
            <div className="join_popup__inner">
                 <button className="close_butn2" onClick={()=>props.setTrigger(false)}>Back</button>
-                <h2>Room ID</h2> 
+                <h2 className="Room__IDtxt">Room ID</h2> 
                 <input 
+                className="inputbox"
                 type="text"
                 placeholder={'Enter Room ID'} 
                 label="ChannelName"  
                 margin="normal"/>
-                <h2>Code</h2>
+                <h2 className="Room__IDtxt">Code </h2>
                 <input 
+                className="inputbox"
                 type="text"
                 placeholder={'Enter Code'} 
                 label="ChannelName"  
                 margin="normal"/>
-                <h2>Channel Name</h2>
-                <input 
+                <h2 className="Room__IDtxt">Channel Name</h2>
+                <input className="inputbox"
                 type="text"
                 placeholder={'Enter Channel Name'} 
                 label="ChannelName"  
                 margin="normal"/>
-                <li>
-                <button>join</button>
-                </li>
+                <div>
+                <button className="join__btn">join</button>
+                </div>
                 {props.children}
            </div>
         </div>
@@ -106,14 +108,15 @@ function CreatePopup(props) {
         <div className="create_popup">
            <div className="create_popup__inner">
                 <button className="close_butn3" onClick={()=>props.setTrigger(false)}>Back</button>
-                <h2 className="ChannelName__text"> Channel Name</h2>
-                <input 
+                <h2 className="Room__IDtxt"> Channel Name</h2>
+                <input
+                className="inputbox" 
                 type="text"
                 placeholder={'Enter Channel Name'} 
                 label="ChannelName"  
                 margin="normal"/>
                 {props.children}
-                <button>Create</button>
+                <button className="create__CNbtn" >Create</button>
            </div>
         </div>
     ):"";
