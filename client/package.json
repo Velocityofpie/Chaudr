@@ -1,0 +1,23 @@
+{
+  "name": "chaudr",
+  "author": "https://github.com/Velocityofpie",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "axios": "^0.21.2",
+    "crypto-js": "^4.1.1",
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.4",
+    "@vue/compiler-sfc": "^3.0.5",
+    "prettier": "^2.3.2",
+    "vite": "^2.4.0"
+  }
+}

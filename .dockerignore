@@ -1,0 +1,4 @@
+*/node_modules
+/repository/gorm.db
+.envrc
+copilot
