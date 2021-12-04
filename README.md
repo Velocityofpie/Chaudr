@@ -28,4 +28,4 @@ Again, **make sure you are in the repository root**. Now run `go build -o chaudr
 
 # Running
 
-On \*nix systems (Linux and Mac OS), you can run the program with `./chaudr`. This will start the server on the port `8080`, but you can control that by passing a flag to the program. If you want to run another port, for example `7070`, you can run `./chaudr -addr :7070`. Note that you must put a `:` before the port number.
+On \*nix systems (Linux and Mac OS), you can run the program with `./chaudr`. This will start the server on the port `8080`, but you can control that by passing a flag to the program. If you want to run another port, for example `7070`, you can run `./chaudr -addr :7070`. Note that you must put a `:` before the port number. Navigate to [localhost:8080](http://localhost:8080)
