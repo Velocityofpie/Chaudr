@@ -1,6 +1,7 @@
 # chaudr
 
 Link to deployed project: http://ec2-18-232-171-115.compute-1.amazonaws.com:8080/
+
 Unfortunatly, we were unable to figure out how to deploy the app with an HTTPS certificate in time, but it was our intention. Currently, the server is running on plain HTTP. We also had plans to deploy AWS WAF (Web Application Firewall) to protect against DDOS attacks, and a load balacer that terminated idle connections so that the server wouldn't be overloaded, but we simply didn't have enough time.
 
 # Prequisites
