@@ -32,4 +32,4 @@ On \*nix systems (Linux and Mac OS), you can run the program with `./chaudr`. Th
 
 # Issues
 
-If you are a Window's user, you will most likely have issues running `go build`. There is an issue with a library we used (a sqlite library). However, if you have docker installed and docker experience, you can run the app using `docker build . -t chaudr` and `docker run -p 8080:8080 chaudr`
+If you are a Window's user, you will most likely have issues running `go build`. There is an issue with a library we used (a sqlite library). However, if you have Docker Desktop installed with linux containers, you can run the app using `docker build . -t chaudr` and `docker run -p 8080:8080 chaudr`. Or if you have WSL, you can build and run the application inside of a WSL instance.
