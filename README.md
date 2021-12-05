@@ -29,3 +29,7 @@ Again, **make sure you are in the repository root**. Now run `go build -o chaudr
 # Running
 
 On \*nix systems (Linux and Mac OS), you can run the program with `./chaudr`. This will start the server on the port `8080`, but you can control that by passing a flag to the program. If you want to run another port, for example `7070`, you can run `./chaudr -addr :7070`. Note that you must put a `:` before the port number. Navigate to [localhost:8080](http://localhost:8080)
+
+# Issues
+
+If you are a Window's user, you will most likely have issues running `go build`. There is an issue with a library we used (a sqlite library). However, if you have docker installed and docker experience, you can run the app using `docker build . -t chaudr` and `docker run -p 8080:8080 chaudr`
