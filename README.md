@@ -10,7 +10,7 @@ If you have Docker or Docker Desktop working on your machine, you can simply run
 
 # Prequisites
 
-You need to have a couple of tools installed to run the project. For windows users you might need windows subsystem for linux and need to enble VM in the bios of you motherboard. Docker requires WSL 2 
+You need to have a couple of tools installed to run the project. For windows users you might need windows subsystem for linux and need to enble VM in the bios of you motherboard. Docker requires WSL 2. Here is the setup for installing WSL https://docs.microsoft.com/en-us/windows/wsl/install .
 
 ## Node and NPM
 
